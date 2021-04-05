@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 const EmployeesModel = require('./models/employees.model');
+const RecordDataModel = require('./models/recordData.model');
 const app = require('./server');
 require('dotenv').config();
 
@@ -16,6 +17,7 @@ client.connect()
   .then(() => {
     app.listen(port, async () => {
       await EmployeesModel.injectDB(client);
+      await RecordDataModel.injectDB(client);
       console.log(`Listening on port: ${port}`);
     });
   })
