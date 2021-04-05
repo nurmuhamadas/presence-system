@@ -56,6 +56,33 @@ class RecordDataController {
       res.status(404).json({ error });
     }
   }
+
+  static async addRecordData(req, res) {
+    const { userId, glucose, temperature } = req.body;
+
+    if (!userId || userId === undefined || userId === '') {
+      res.status(400).json({ error: 'userId is required' });
+      return;
+    }
+
+    if (!glucose || glucose === undefined || glucose === '') {
+      res.status(400).json({ error: 'glucose is required' });
+      return;
+    }
+
+    if (!temperature || temperature === undefined || temperature === '') {
+      res.status(400).json({ error: 'temperature is required' });
+      return;
+    }
+
+    try {
+      const response = await RecordDataModel
+        .addRecordData({ userId, glucose, temperature });
+      res.status(200).json(response);
+    } catch (error) {
+      res.status(404).json({ error });
+    }
+  }
 }
 
 module.exports = RecordDataController;
